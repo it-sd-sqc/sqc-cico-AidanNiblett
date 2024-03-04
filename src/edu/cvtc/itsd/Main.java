@@ -39,24 +39,28 @@ public class Main {
 
     @Override
     public void insertString(FilterBypass fb, int offset, String stringToAdd, AttributeSet attr)
-        throws BadLocationException
-    {
+            throws BadLocationException {
       if (fb.getDocument() != null) {
-        super.insertString(fb, offset, stringToAdd, attr);
-      }
-      else {
+        if (fb.getDocument().getLength() + stringToAdd.length() <= MAX_LENGTH) {
+          super.insertString(fb, offset, stringToAdd, attr);
+        } else {
+          Toolkit.getDefaultToolkit().beep();
+        }
+      } else {
         Toolkit.getDefaultToolkit().beep();
       }
     }
 
     @Override
     public void replace(FilterBypass fb, int offset, int lengthToDelete, String stringToAdd, AttributeSet attr)
-        throws BadLocationException
-    {
+            throws BadLocationException {
       if (fb.getDocument() != null) {
-        super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
-      }
-      else {
+        if (fb.getDocument().getLength() - lengthToDelete + stringToAdd.length() <= MAX_LENGTH) {
+          super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
+        } else {
+          Toolkit.getDefaultToolkit().beep();
+        }
+      } else {
         Toolkit.getDefaultToolkit().beep();
       }
     }
@@ -175,11 +179,11 @@ public class Main {
   private static void showError(int code) {
     // Module 2 ticket: Show human-readable error messages.
     String[] explanations = {
-        "Please inform staff an unknown error occurred.",
-        "Please inform staff that database wasn't found.",
-        "Please show your card to staff to validate.",
-        "Please inform staff that status updates failed.",
-        "Please inform staff that log updates failed."
+            "Please inform staff an unknown error occurred.",
+            "Please inform staff that database wasn't found.",
+            "Please show your card to staff to validate.",
+            "Please inform staff that status updates failed.",
+            "Please inform staff that log updates failed."
     };
 
     labelReason.setText(explanations[code]);
@@ -361,6 +365,8 @@ public class Main {
     }
 
     // Display the GUI ////////////////////////////////////////////////////////
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     frame.pack();
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);

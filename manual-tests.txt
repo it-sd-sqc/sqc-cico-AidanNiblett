@@ -61,4 +61,31 @@ Use `./build.sh` to build CiCo and `./run.sh` to run it if using the command lin
 ## Expected results
 * Should display "Developer" for the user name.
 
+# Module 4: Limit input to 8 characters
+
+## Test steps
+1. Build and run CiCo.
+2. Enter 000000000 (nine zeroes) into the field
+
+## Expected results
+* Should prevent the ninth zero from being typed
+
+# Module 5: Test failure to stop program when JFrame is closed
+
+## Test steps
+1. Build and run CiCo.
+2. Close the window
+
+## Expected results:
+* The bash console should remain open
+
+# Module 5: Test console being closed automatically when JFrame is closed
+
+## Test steps
+1. Build and run CiCo.
+2. Close the window
+
+## Expected results:
+* The bash console should close as well
+
 
