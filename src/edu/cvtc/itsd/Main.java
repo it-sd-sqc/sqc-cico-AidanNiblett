@@ -43,6 +43,7 @@ public class Main {
     {
       if (fb.getDocument() != null) {
         super.insertString(fb, offset, stringToAdd, attr);
+        checkForSubmit(fb);
       }
       else {
         Toolkit.getDefaultToolkit().beep();
@@ -55,12 +56,25 @@ public class Main {
     {
       if (fb.getDocument() != null) {
         super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
+        checkForSubmit(fb);
       }
       else {
         Toolkit.getDefaultToolkit().beep();
       }
     }
+    //once last digit is entered it automatically submits
+    private void checkForSubmit(FilterBypass fb) {
+//      String cardNumber = fb.getDocument().getText(0, fb.getDocument().getLength());
+      int length = fb.getDocument().getLength();
+      if(length == MAX_LENGTH) {
+        //automatically submit the card number
+        Main.processCard();
+      }
+    }
   }
+
+
+
 
   // Lookup the card information after button press ///////////////////////////
   public static class Update implements ActionListener {
@@ -260,11 +274,12 @@ public class Main {
     fieldNumber.setForeground(Color.magenta);
     panelMain.add(fieldNumber);
 
-    JButton updateButton = new JButton("Update");
-    updateButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    updateButton.addActionListener(new Update());
-    updateButton.setForeground(Color.green);
-    panelMain.add(updateButton);
+    //removed the update button from screen
+//    JButton updateButton = new JButton("Update");
+//    updateButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+//    updateButton.addActionListener(new Update());
+//    updateButton.setForeground(Color.green);
+//    panelMain.add(updateButton);
 
     panelMain.add(Box.createVerticalGlue());
 
