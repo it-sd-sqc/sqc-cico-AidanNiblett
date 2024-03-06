@@ -89,3 +89,12 @@ Use `./build.sh` to build CiCo and `./run.sh` to run it if using the command lin
 * The bash console should close as well
 
 
+# Module 6: Testing CiCo takes longer than it should.
+
+## test steps
+1. Build and run CiCo
+2. Type in a valid card number
+3. verify that submission automatically occurs after entering the last digit.
+
+Expected Results:
+The submission should happen automatically after entering the last digit of card number.

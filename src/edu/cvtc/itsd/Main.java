@@ -41,12 +41,10 @@ public class Main {
     public void insertString(FilterBypass fb, int offset, String stringToAdd, AttributeSet attr)
             throws BadLocationException {
       if (fb.getDocument() != null) {
-        if (fb.getDocument().getLength() + stringToAdd.length() <= MAX_LENGTH) {
-          super.insertString(fb, offset, stringToAdd, attr);
-        } else {
-          Toolkit.getDefaultToolkit().beep();
-        }
-      } else {
+        super.insertString(fb, offset, stringToAdd, attr);
+        checkForSubmit(fb);
+      }
+      else {
         Toolkit.getDefaultToolkit().beep();
       }
     }
@@ -55,16 +53,26 @@ public class Main {
     public void replace(FilterBypass fb, int offset, int lengthToDelete, String stringToAdd, AttributeSet attr)
             throws BadLocationException {
       if (fb.getDocument() != null) {
-        if (fb.getDocument().getLength() - lengthToDelete + stringToAdd.length() <= MAX_LENGTH) {
-          super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
-        } else {
-          Toolkit.getDefaultToolkit().beep();
-        }
-      } else {
+        super.replace(fb, offset, lengthToDelete, stringToAdd, attr);
+        checkForSubmit(fb);
+      }
+      else {
         Toolkit.getDefaultToolkit().beep();
       }
     }
+    //once last digit is entered it automatically submits
+    private void checkForSubmit(FilterBypass fb) {
+//      String cardNumber = fb.getDocument().getText(0, fb.getDocument().getLength());
+      int length = fb.getDocument().getLength();
+      if(length == MAX_LENGTH) {
+        //automatically submit the card number
+        Main.processCard();
+      }
+    }
   }
+
+
+
 
   // Lookup the card information after button press ///////////////////////////
   public static class Update implements ActionListener {
@@ -264,11 +272,12 @@ public class Main {
     fieldNumber.setForeground(Color.magenta);
     panelMain.add(fieldNumber);
 
-    JButton updateButton = new JButton("Update");
-    updateButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    updateButton.addActionListener(new Update());
-    updateButton.setForeground(Color.green);
-    panelMain.add(updateButton);
+    //removed the update button from screen
+//    JButton updateButton = new JButton("Update");
+//    updateButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+//    updateButton.addActionListener(new Update());
+//    updateButton.setForeground(Color.green);
+//    panelMain.add(updateButton);
 
     panelMain.add(Box.createVerticalGlue());
 
